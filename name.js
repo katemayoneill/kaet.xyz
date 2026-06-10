@@ -4,58 +4,43 @@
 @desc   name display
 */
 
-const REPEL_DISTANCE = 8;
-const REPEL_STRENGTH = 0.5;
-const MIN_DISTANCE = 0.1;
-const SPRING_FORCE = 0.08;
-const FRICTION =  0.92;
+let config = null;
+let big, small, grid = []
+let map = new Map();
 
-const MOBILE_WIDTH = 800;
-const MOBILE_HEIGHT = 400;
+const PHYSICS = {
+	    repel_distance : 8,
+	  	repel_strength : 0.5,
+	 	min_distance   : 0.1,
+      	spring_force   : 0.08,
+      	friction       :  0.92
+};
 
-let big, small, grid = [], map = new Map();
+const MOBILE_BREAKPOINT = {
+	width  : 800,
+	height : 400
+}
 
+function check_config(cfg) {
+	if (!cfg) throw new Error('config required');
+	if (!cfg.files || !cfg.files || !cfg.files.small) {
+		throw new Error('config.art_files.big and config.art_files.small required');
+	}
+}
 
+function get_css(pre) {
+	const s = window.getComputedStyle(pre);
+	return {
+		backgroundColor: s.backgroundColor || 'white',
+		color: s.color || 'black',
+		fontFamily: s.fontFamily || 'monospace',
+		lineHeight: s.lineHeight || '1'
+	};
+}
 
-
-const BIG_ROWS = 
-`    *****                                    
-  ******                           *          
- **   *  *    **                  **          
-*    *  *   **** *                **          
-    *  *     ****               ********      
-   ** **    * **          **** ******** ***   
-   ** **   *             * ***  * **   * ***  
-   ** *****             *   ****  **  *   *** 
-   ** ** ***           **    **   ** **    ***
-   ** **   ***         **    **   ** ******** 
-   *  **    ***        **    **   ** *******  
-      *       ***      **    **   ** **       
-  ****         ***     **    **   ** ****    *
- *  *****        ***  * ***** **   ** ******* 
-*    ***           ***   ***   **      *****  
-*                                              
- **`.split('\n');
-
-
-const SMALL_ROWS = 
-`      *****          
-   ******        
-  **   *  *    ** 
- *    *  *   **** *
-     *  *     **** 
-    ** **    * **    
-    ** **   *
-    ** *****
-    ** ** ***
-    ** **   ***
-    *  **    ***
-       *       ***
-   ****         ***
-  *  *****        ***  * 
- *    ***           ***   
- *
-  **`.split('\n');
+function log(level, message, data = null) {
+	console.log(`[ascii-animation] ${level.toUpperCase()}: ${message}`, data || '');
+}
 
 function  coords_to_key(x, y) {
 	return `${Math.floor(x)},${Math.floor(y)}`;
@@ -74,18 +59,12 @@ function rows_to_ascii(rows) {
 }
 
 function change_ascii() {
-	const is_mobile = window.innerWidth < MOBILE_WIDTH || window.innerHeight < MOBILE_HEIGHT;
+	const bp = config.mobile_breakpoint;
+	const is_mobile = window.innerWidth < bp.width || window.innerHeight < bp.width;
 	grid = is_mobile ? small.grid : big.grid;
 	map.clear();
 	grid.forEach(art => map.set(coordKey(art.x, art.y), art));
 }
-
-export const settings = {
-	backgroundColor: 'white',
-	color: 'black',
-	fontFamily: 'monospace',
-	lineHeight: '1'
-};
 
 export function on_resize() {
 	change_ascii();
@@ -93,20 +72,22 @@ export function on_resize() {
 
 export function pre(context, cursor) {
 	grid.forEach( art => {
+		const p = config.physics;
 		const dx = art.x + art.offset_x - cursor.x;
 		const dy = art.y + art.offset_y - cursor.y;
 		const distance_sq = dx * dx + dy * dy;
-		if (distance_sq < REPEL_DISTANCE ** 2 && distance_sq > MIN_DISTANCE) {
+
+		if (distance_sq < p.repel_distance ** 2 && distance_sq > p.min_distance) {
 			const distance = Math.sqrt(distance_sq);
-			const force = REPEL_STRENGTH * (1 - distance / REPEL_DISTANCE);
+			const force = p.repel_strength * (1 - distance / p.repel_distance);
 			const angle = Math.atan2(dy, dx);
 			art.vel_x += Math.cos(angle) * force;
 			art.vel_y += Math.sin(angle) * force;
 		}
-		art.vel_x -= art.offset_x * SPRING_FORCE;
-		art.vel_y -= art.offset_y * SPRING_FORCE;
-		art.vel_x *= FRICTION;
-		art.vel_y *= FRICTION;
+		art.vel_x -= art.offset_x * p.spring_force;
+		art.vel_y -= art.offset_y * p.spring_force;
+		art.vel_x *= p.friction;
+		art.vel_y *= p.friction;
 		art.offset_x += art.vel_x;
 		art.offset_y += art.vel_y;
 	});
@@ -124,10 +105,48 @@ export function main(coord, context, cursor) {
 	return ' ';
 }
 
-(asyncg () => {
-	const load_ascii = file => fetch(file)
-	.then(r => r.text())
-	.then(t => rows_to_ascii(t.split('\n')));
-	[big, small] = await Promise.all([load_ascii('big.txt'), load_ascii('small.txt')]);
-	change_ascii();
-})();
+export async function init(user_config) {
+	check_config(user_config);
+
+	try {
+		log('info', 'initializing', user_config);
+
+		const physics = { ...PHYSICS, ...user_config.physics };
+		const breakpoint = { ...MOBILE_BREAKPOINT, ...user_config.mobile_breakpoint };
+		const settings = user_config.settings || getPageSettings(user_config.pre || document.querySelector('pre'));
+
+		config = {
+			files: user_config.files,
+			physics: {
+				repel_distance: physics.repel_distance,
+				repel_strength: physics.repel_strength,
+				friction: physics.friction,
+				repel_force: physics.repel_force,
+				min_distance: physics.min_distance
+			},
+			mobile_breakpoint: breakpoint,
+			settings
+		};
+
+		log('info', 'loading files');
+		const load_file = file => fetch(file)
+			.then(r => {
+				if (!r.ok) throw new Error(`${file}: ${r.status}`);
+				return r.text();
+			})
+			.then(t => parseArt(t.split('\n')));
+
+		[big, small] = await Promise.all([
+			load_file(config.files.big),
+			load_file(config.files.small)
+		]);
+
+		change_ascii();
+		log('info', `loaded ${big.grid.length} big and ${small.grid.length} small characters`);
+
+		return { main, pre, settings: config.settings, on_resize };
+	} catch (err) {
+		log('error', err.message);
+		throw err;
+	}
+}
