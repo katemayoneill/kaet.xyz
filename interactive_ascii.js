@@ -63,7 +63,7 @@ function change_ascii() {
 	const is_mobile = window.innerWidth < bp.width || window.innerHeight < bp.width;
 	grid = is_mobile ? small.grid : big.grid;
 	map.clear();
-	grid.forEach(art => map.set(coordKey(art.x, art.y), art));
+	grid.forEach(art => map.set(coords_to_key(art.x, art.y), art));
 }
 
 export function on_resize() {
@@ -113,7 +113,7 @@ export async function init(user_config) {
 
 		const physics = { ...PHYSICS, ...user_config.physics };
 		const breakpoint = { ...MOBILE_BREAKPOINT, ...user_config.mobile_breakpoint };
-		const settings = user_config.settings || getPageSettings(user_config.pre || document.querySelector('pre'));
+		const settings = user_config.settings || get_css(user_config.pre || document.querySelector('pre'));
 
 		config = {
 			files: user_config.files,
@@ -134,7 +134,7 @@ export async function init(user_config) {
 				if (!r.ok) throw new Error(`${file}: ${r.status}`);
 				return r.text();
 			})
-			.then(t => parseArt(t.split('\n')));
+			.then(t => rows_to_ascii(t.split('\n')));
 
 		[big, small] = await Promise.all([
 			load_file(config.files.big),
