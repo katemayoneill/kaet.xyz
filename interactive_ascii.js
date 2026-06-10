@@ -18,7 +18,7 @@ const PHYSICS = {
 
 const MOBILE_BREAKPOINT = {
 	width  : 800,
-	height : 400
+	height : 200
 }
 
 function check_config(cfg) {
@@ -60,7 +60,7 @@ function rows_to_ascii(rows) {
 
 function change_ascii() {
 	const bp = config.mobile_breakpoint;
-	const is_mobile = window.innerWidth < bp.width || window.innerHeight < bp.width;
+	const is_mobile = window.innerWidth < bp.width;
 	grid = is_mobile ? small.grid : big.grid;
 	map.clear();
 	grid.forEach(art => map.set(coords_to_key(art.x, art.y), art));
@@ -94,18 +94,18 @@ export function pre(context, cursor) {
 }
 
 export function main(coord, context, cursor) {
-	const art = map.get(coords_to_key(coord.x, coord.y));
-	if (!art) return ' ';
-
-	const offset_x = Math.round(art.offset_x);
-	const offset_y = Math.round(art.offset_y);
-	if (Math.floor(coord.x) === art.x + offset_x && Math.floor(coord.y) === art.y + offset_y) {
-		return art.char;
+	for (let art of map.values()) {
+		const offset_x = Math.round(art.offset_x);
+		const offset_y = Math.round(art.offset_y);
+		if (Math.floor(coord.x) === art.x + offset_x && Math.floor(coord.y) === art.y + offset_y) {
+			return art.char;
+		}
 	}
 	return ' ';
 }
 
-export async function init(user_config) {
+export async function boot(context, buffer, userData) {
+	const user_config = context.settings;
 	check_config(user_config);
 
 	try {
@@ -121,7 +121,7 @@ export async function init(user_config) {
 				repel_distance: physics.repel_distance,
 				repel_strength: physics.repel_strength,
 				friction: physics.friction,
-				repel_force: physics.repel_force,
+				spring_force: physics.spring_force,
 				min_distance: physics.min_distance
 			},
 			mobile_breakpoint: breakpoint,
@@ -143,8 +143,6 @@ export async function init(user_config) {
 
 		change_ascii();
 		log('info', `loaded ${big.grid.length} big and ${small.grid.length} small characters`);
-
-		return { main, pre, settings: config.settings, on_resize };
 	} catch (err) {
 		log('error', err.message);
 		throw err;

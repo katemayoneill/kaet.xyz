@@ -88,7 +88,7 @@
             .face-name pre {
                 width: 80%;
                 display: inline-block;
-                height:100px;
+                height: 100px;
                 line-height: 1.2;
 		    }
 
@@ -238,11 +238,19 @@ German  ⭐️⭐️⭐️</pre>
             <script type="module">
                 import { run } from './play.core/src/run.js'
                 import * as program from './interactive_ascii.js'
-                run(program, { element : document.querySelector('pre') }).then(function(e){
+                run(program, {
+                    element : document.querySelector('pre'),
+                    files: {
+                        big: 'ascii/big.txt',
+                        small: 'ascii/small.txt'
+                    }
+                }).then(function(e){
                     console.log(e)
+                    console.log('init returned:', e)
                 }).catch(function(e) {
+                    console.error('Error:', e)
                     console.warn(e.message)
-                    console.log(e.error)
+                    console.log(e)
                 })
             </script>
 
