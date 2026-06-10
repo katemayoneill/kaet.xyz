@@ -4,7 +4,7 @@
 @desc   name display
 */
 
-const BIG = 
+const BIG_ROWS = 
 `    *****                                    
   ******                           *          
  **   *  *    **                  **          
@@ -21,10 +21,10 @@ const BIG =
  *  *****        ***  * ***** **   ** ******* 
 *    ***           ***   ***   **      *****  
 *                                              
- **`.split('\n')
+ **`.split('\n');
 
 
-const SMALL = 
+const SMALL_ROWS = 
 `      *****          
    ******        
   **   *  *    ** 
@@ -41,7 +41,25 @@ const SMALL =
   *  *****        ***  * 
  *    ***           ***   
  *
-  **`.split('\n')
+  **`.split('\n');
+
+
+function rows_to_ascii(rows) {
+	let grid = [];
+		rows.forEach((line, y) => {
+			for (let x = 0; x < line.length; x++) {
+				if (line[x] !== ' ') {
+					grid.push({x, y, char: line[x], offsetX: 0, offsetY: 0, velX: 0, velY: 0});
+				}
+			}
+		});
+	return { grid };
+}
+
+
+
+
+
 
 export function main(coord, context, cursor, buffer) {
 	// To generate an output return a single character
