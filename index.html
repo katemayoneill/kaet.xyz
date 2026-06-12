@@ -45,9 +45,10 @@
                 letter-spacing: 2px;
             }
 
-            .scroll-banner p {
+            .scroll-banner p,
+            .scroll-banner a {
                 display: inline-block;
-                animation: scroll 5s linear infinite;
+                animation: scroll 15s linear infinite;
             }
 
             @keyframes scroll {
@@ -58,51 +59,66 @@
                     transform: translateX(100vw);
                 }
             }
-
         </style>
 
     </head>
 
     <body>
-        <header>
-            <div class="scroll-banner">
-                <p>⭐ currently looking for work ⭐ please hire me :3 ⭐</p>
-            </div>
-            <nav>
-                <a href="https://github.com/katemayoneill">github</a>
-                <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a>
-                <a href="https://www.instagram.com/knitterforlife01/">instagram</a>
-            </nav>
-        </header>
 
-
+        <nav class="scroll-banner">
+            <p>⭐ currently looking for work ⭐ please hire me :3 ⭐</p>
+            <a href="https://github.com/katemayoneill">github</a>
+            <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a>
+        </nav>
+   
         <main>
+            <section>
+                <r-grid columns="8" columns-s="2">
+                    <r-cell span="1" span-s="1" span-l="1" class="flex-v">
+                        <p>Education</p>
+                    </r-cell>
+                    <r-cell span="1" span-s="1" span-l="1" class="flex-v">
+                        <p>BA(Mod)in Computer Science @ <a href="https://www.tcd.ie/scss/">Trinity College Dublin</a> </i></p>
+                    </r-cell>
+                </r-grid>
+            </section>
 
-            <div class="face-name">
-                <img src="img/kateface.jpg" alt="Kate's face" />
+            <section>
+                <r-grid columns="8" columns-s="2">
+                    <r-cell span="3+1" span-s="1" span-l="2+1">
+                        <p>Projects</p>
+                    </r-cell>
+                    <r-cell span="1" span-s="1" span-l="1">
+                        <p>
+                            Evaluating cyclists' saddle height from video. Read more <a href="">here</a>. 
+			            </p>
+                    </r-cell>
+                </r-grid>
 
-                <pre></pre>
-            </div>
+            </section>
 
-            <p> 
-                Hello, I am a final year <abbr title="Integrated Computer Science">ICS</abbr> Student at <abbr title="Trinity College Dublin">TCD</abbr>.
-                This is my personal website that acts as a portfolio. 
-            </p>
-            
-            <article>
+            <section>
+                <r-grid columns="8" columns-s="2">
+		            <r-cell span="4" span-s="1" span-l="2+2">
+		                <pre class="animation" style="min-height: 260px; margin: 0; white-space: pre; overflow: hidden; user-select: none;"></pre>
+                    </r-cell>
+                    <r-cell span="1" span-s="1" span-l="4+1">
+                        <p>Other interests</p>
+                    </r-cell>
+                    <r-cell span="1" span-s="1" span-l="1">
+                        <p>
+                            Machine knitting, pattern design, ascii art, and cycling.
+                        </p>
+                    </r-cell>
+                    <r-cell span="1" span-s="1" span-l="1" class="flex-v">
+                        <img src="img/photo.jpeg" alt="photo" style="margin-top: auto; max-width: 200px;">
+                    </r-cell>
 
-                <section>
+		
 
-                    <h2>Education</h2>
+		
 
-                    <p>BA(Mod)in Computer Science @ <a href="https://www.tcd.ie/scss/">Trinity College Dublin</a> </i></p>
-
-                    <p>Relevant modules: Software Engineering Project, Algorithms & Data Structures, Concurrent Systems and Operating Systems, 
-                        Computer Architecture, Microprocessor Systems, Computer Networks</p>
-
-                </section>
-
-                <section>
+	</r-grid>
 
                     <h2>Languages</h2>
                     
@@ -217,9 +233,11 @@ German  ⭐️⭐️⭐️</pre>
         </main>
 
         <footer>
-
-            <p id="time"></p> 
-
+            <r-grid columns="6" columns-s="3">
+                <r-cell span="6-6" span-s="1" span-l="6-6">
+			        <p>&copy; 2026 Kate May O'Neill</p>
+		        </r-cell>
+	        </r-grid>
         </footer>
         
         <script type="text/javascript" charset="utf-8">
