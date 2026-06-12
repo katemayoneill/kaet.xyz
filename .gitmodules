@@ -1,3 +1,9 @@
-[submodule "play.core"]
-	path = play.core
+[submodule "vendor/raster"]
+	path = vendor/raster
+	url = https://github.com/rsms/raster.git
+[submodule "libs/play.core"]
+	path = libs/play.core
 	url = https://github.com/ertdfgcvb/play.core.git
+[submodule "libs/raster"]
+	path = libs/raster
+	url = https://github.com/rsms/raster.git

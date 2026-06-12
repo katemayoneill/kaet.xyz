@@ -13,257 +13,147 @@
 
 
 
-
+        <link rel="stylesheet" href="libs/raster/raster2.css">
         <link rel="icon" href="/img/favicon.ico">
-        
-        <title>Kate O'Neill - Integrated Computer Science | Trinity College Dublin</title>
 
-        <meta name="description" content="My name is Kate O'Neill a final year ICS student, and this is my Meta Description!">
+        <title>Kate O'Neill</title>
+
+        <meta name="description" content="My name is Kate O'Neill and this is my Meta Description!">
 
         <style>
-            * {
 
-                box-sizing: border-box;
-                font-size: medium;
+            :root {
+                --font-mono: "Courier New", monospace;
+                --rowGap: calc(var(--lineHeight) * 0.5);
             }
 
-            h1, h2, h3 {
-                margin-bottom: 0;
-                padding-bottom: 0;
+            .scroll-banner {
+                color: blue;
+                overflow: hidden;
+                letter-spacing: 2px;
+                position: fixed;
+                bottom: 15%;
+                left: 0;
+                right: 0;
+                z-index: 10;
             }
 
-            p {
-                margin-top: 0;
-                padding-top: 0;
-            }
-
-            img {
-                height: 150px;
-            }
-
-            header div {
+            .scroll-banner span {
                 display: inline-block;
-                vertical-align: bottom;
+                white-space: nowrap;
+                animation: scroll 15s linear infinite;
             }
 
-            body {
-	            font-family: 'Times New Roman', serif;
-	            margin: 0;
-                padding: 0;
-                text-align: left;
-                background-size: 100% 600px;
-                word-wrap: break-word;
-                overflow-wrap: break-word;
-                font-size: 20px;
-                line-height: 1.7;
+            @keyframes scroll {
+                0% {
+                    transform: translateX(-50vw);
+                }
+                100% {
+                    transform: translateX(100vw);
+                }
             }
 
-            main {
-                width: 720px;
-                max-width: calc(100% - 2em);
-                margin: auto;
-                padding: 3em 1em;
+            pre.animation {
+                font-family: var(--font-mono);
+                font-size: 8px;
+                line-height: 1;
+                letter-spacing: 1px;
+                margin-top: 6lh;
             }
 
-            header {
-                margin: 0;
-                padding: 1em 1em;
+            @media (max-width: 600px) {
+                pre.animation {
+                    min-height: 150px;
+
+                }
             }
 
-            nav a {
-	        	padding: 0.5em 0.5em;
-	        }
-
-            footer {
-                padding: 1em 1em;
+            footer{
+                text-align: end;
             }
-
-            .face-name img {
-                display: inline-block;
-                width: auto;
-                height: 100px;
-
-            }
-
-            .face-name pre {
-                width: 80%;
-                display: inline-block;
-                height:100px;
-                line-height: 1.2;
-		    }
-
         </style>
 
     </head>
 
     <body>
-        <header>
-
-            
-            
-
-
-                
-
-                <nav>
-                    <a href="https://github.com/katemayoneill">github</a>
-                    <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a>
-                    <a href="https://www.instagram.com/knitterforlife01/">instagram</a>
-                </nav>
-
-
-
-        </header>
-
+     
 
         <main>
+            <r-grid columns="8" columns-s="2">
 
-            <div class="face-name">
-                <img src="img/kateface.jpg" alt="Kate's face" />
+                <r-cell span="1" span-s="1" class="flex-v">
+                    <p>Education</p>
+                </r-cell>
+                <r-cell span="1" span-s="1" class="flex-v">
+                    <p>BA(Mod) in Computer Science @ <a href="https://www.tcd.ie/scss/">Trinity College Dublin</a></p>
+                </r-cell>
 
-                <pre></pre>
-            </div>
+                <r-cell span=row>&nbsp;</r-cell>
 
-            <p> 
-                Hello, I am a final year <abbr title="Integrated Computer Science">ICS</abbr> Student at <abbr title="Trinity College Dublin">TCD</abbr>.
-                This is my personal website that acts as a portfolio. 
-            </p>
-            
-            <article>
+                <r-cell span="3+1" span-s="1">
+                    <p>Projects</p>
+                </r-cell>
+                <r-cell span="1" span-s="1" class="flex-v" style="justify-content: flex-end;">
+                    <p>Evaluating cyclists' saddle height from video. Read more <a href="">here</a>.</p>
+                </r-cell>
 
-                <section>
+                <r-cell span=row>&nbsp;</r-cell>
 
-                    <h2>Education</h2>
-
-                    <p>BA(Mod)in Computer Science @ <a href="https://www.tcd.ie/scss/">Trinity College Dublin</a> </i></p>
-
-                    <p>Relevant modules: Software Engineering Project, Algorithms & Data Structures, Concurrent Systems and Operating Systems, 
-                        Computer Architecture, Microprocessor Systems, Computer Networks</p>
-
-                </section>
-
-                <section>
-
-                    <h2>Languages</h2>
-                    
-                    <pre>English ⭐️⭐️⭐️⭐️⭐️
-French  ⭐️⭐️⭐️⭐️⭐️
-Italian ⭐️⭐️⭐️
-German  ⭐️⭐️⭐️</pre>
-
-                </section>
-
-                <section>
-                    <h2>Projects</h2>
-
-                        <h3><a href="https://kaet.xyz/">kaet.xyz</a></h3>
-                        <p>Personal portfolio website (yes, this one!) using HTML/CSS, JavaScript, AWS Amplify.</p>
-
-                        <h3><a href="https://forum.kaet.xyz/">forum.kaet.xyz</a></h3>
-                        <p>Forum made using WordPress and hosted on NearlyFreeSpeech.net</p>
-
-                        <h3><a href="https://blog.kaet.xyz/">kaet.xyz</a></h3>
-                        <p>Personal Blog made using Astro, Javascript and CSS hosted on AWS Amplify</p>
-
-                        <h3><a href="https://github.com/jathonderulo/SwEngGroup27">AI Persona Chatbot</a></h3>
-                        <p>AI chatbot that interprets and analyses large survey data sets for 
-                            CSU33013 <abbr title="Software Engineering Group Project">SWENG</abbr> II and Bounce Insights using OpenAI API, Node.js, ReactJS.</p>
-
-                        <h3><a href="https://gitlab.scss.tcd.ie/malashcs/swe-group3-frontend">Recipes App</a></h3>
-                        <p>Recipe Web app for CSU33012 Software Engineering using HTML/CSS, Node.js, Docker, Spring Boot, Java, Apache Maven</p>
-
-                        <h3><a href="https://github.com/alexandersep/On-Demand-Video-Transcoding">On Demand Video Transcoding</a></h3>
-                        <p>Web application that provides on-demand video transcoding for CSU22013 <abbr title="Software Engineering Group Project">SWENG</abbr> & Shutterstock 
-                            using HTMl/CSS, JavaScript, Docker, Python, Flask, SQLite, FFMPEG, FFPROBE.</p>
-
-                        <h3><a href="https://gitlab.scss.tcd.ie/kannansk/msgroup41">Morse Code Game</a></h3>
-                        <p>Game written in C and ARM Assembly Language for CSU23021 Microprocessor Systems using Raspberry Pi Pico, C, ARM Assembly, Doxygen.</p>
-
-                </section>
-
-                <section>
-                    <h2>Societies</h2>
-
-                    <h3>Pirate Party</h3>
-                    <p>Events Officer in 1st year, and Chair (Captain) in 2nd year. In third year I was <abbr title="Public Relations Officer">PRO</abbr>.</p>
-
-                    <h3>Computer Science Society (DUCSS)</h3>
-                    <p>Amenities in 2nd year.</p>
-
-                    <h3>Internet Society (NetSoc)</h3>
-                    <p>Amenities in 2nd year and 3rd year.</p>
-
-                </section>
-                
+                <r-cell span="5" span-s="row">
+                    <pre class="animation" style="min-height: 300px; white-space: pre; overflow: hidden; user-select: none;"></pre>
+                </r-cell>
+                <r-cell span="6+1" span-s="1">
+                    <p>Other interests</p>
+                </r-cell>
+                <r-cell span="1" span-s="1">
+                    <p>Machine knitting, pattern design, ascii art, and cycling.</p>
+                </r-cell>
+                <r-cell span="8-8" span-s="row" class="flex-v">
+                    <img src="img/photo.jpeg" alt="photo" style="max-width: 200px; margin-top: auto ;">
+                    <footer><p>&copy; 2026 Kate May O'Neill</p></footer>
+                </r-cell>
 
                 
+                
 
-            </article>
-
-            <aside>
-
-                <section>
-
-                    <h2>Knitting</h2>
-                    <p>Mainly socks with 2.5mm needles using magic loop method.</p>
-
-                    <figure>
-                        
-                        <img src="/img/knitting.png" alt="Spider socks">
-                        <figcaption>Spider socks</figcaption>
-
-                    </figure>
-
-                    <p><a href="https://www.instagram.com/knitterforlife01/">see more</a></p>
-                    <p><a href="/pages/knitting.html">patterns</a></p>
-
-                </section>
-
-                <section>
-
-                    <h2>Machine Knitting</h2>
-                    <p>Recently acquired an antique Singer double bed knitting machine that I have been slowly learning to use.</p>
-
-                </section>
-
-                <section>
-
-                    <h2>Fermentation</h2>
-                    <p>Water kefir, kombucha, ginger bug, sourdough, ...</p>
-
-                </section>              
-
-            </aside>
-
-            <script type="module">
-                import { run } from './play.core/src/run.js'
-                import * as program from './name.js'
-                run(program, { element : document.querySelector('pre') }).then(function(e){
-                    console.log(e)
-                }).catch(function(e) {
-                    console.warn(e.message)
-                    console.log(e.error)
-                })
-            </script>
-
+            </r-grid>
         </main>
 
-        <footer>
+        <nav class="scroll-banner">
+            <span>⭐ currently looking for work ⭐ please hire me :3 ⭐ &nbsp; <a href="https://github.com/katemayoneill">github</a> &nbsp; <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a></span>
+        </nav>
 
-            <p id="time"></p> 
-
-        </footer>
         
+
         <script type="text/javascript" charset="utf-8">
-            let a;
-            let time;
+            const titles = ['🐱🐱🐱🐱🐱🐱', '😺😺😺😺😺😺', '😸😸😸😸😸😸', '😹😹😹😹😹😹', '😻😻😻😻😻😻', '😼😼😼😼😼😼', '😽😽😽😽😽😽', '🙀🙀🙀🙀🙀🙀', '😿😿😿😿😿😿', '😾😾😾😾😾😾'];
+            let titleIndex = 0;
+
             setInterval(() => {
-              a = new Date();
-              time = a.toDateString() + ' ' + a.toTimeString();
-              time = time.toLowerCase();
-              document.getElementById('time').innerHTML = time;
-            }, 1000);
+              document.title = titles[titleIndex];
+              titleIndex = (titleIndex + 1) % titles.length;
+            }, 500);
           </script>
+
+
+            <script type="module">
+                import { run } from './libs/play.core/src/run.js'
+                import * as program from './interactive_ascii.js'
+                run(program, {
+                    element : document.querySelector('pre'),
+                    files: {
+                        big: 'ascii/big.txt',
+                        small: 'ascii/small.txt'
+                    }
+                }).then(function(e){
+                    console.log(e)
+                    console.log('init returned:', e)
+                }).catch(function(e) {
+                    console.error('Error:', e)
+                    console.warn(e.message)
+                    console.log(e)
+                })
+            </script>
 
     </body>
 </html>
