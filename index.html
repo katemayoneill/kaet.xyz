@@ -32,15 +32,15 @@
                 overflow: hidden;
                 letter-spacing: 2px;
                 position: fixed;
-                bottom: 0;
+                bottom: 15%;
                 left: 0;
                 right: 0;
                 z-index: 10;
             }
 
-            .scroll-banner p,
-            .scroll-banner a {
+            .scroll-banner span {
                 display: inline-block;
+                white-space: nowrap;
                 animation: scroll 15s linear infinite;
             }
 
@@ -55,10 +55,17 @@
 
             pre.animation {
                 font-family: var(--font-mono);
-                font-size: 10px;
+                font-size: 8px;
                 line-height: 1;
                 letter-spacing: 1px;
                 margin-top: 6lh;
+            }
+
+            @media (max-width: 600px) {
+                pre.animation {
+                    min-height: 150px;
+
+                }
             }
 
             footer{
@@ -72,7 +79,7 @@
      
 
         <main>
-            <r-grid columns="7" columns-s="2">
+            <r-grid columns="8" columns-s="2">
 
                 <r-cell span="1" span-s="1" class="flex-v">
                     <p>Education</p>
@@ -86,41 +93,39 @@
                 <r-cell span="3+1" span-s="1">
                     <p>Projects</p>
                 </r-cell>
-                <r-cell span="1" span-s="1" class="flex-v" style="justify-content: flex-end;"">
+                <r-cell span="1" span-s="1" class="flex-v" style="justify-content: flex-end;">
                     <p>Evaluating cyclists' saddle height from video. Read more <a href="">here</a>.</p>
                 </r-cell>
 
                 <r-cell span=row>&nbsp;</r-cell>
 
-                <r-cell span="5+1" span-s="1">
+                <r-cell span="5" span-s="row">
+                    <pre class="animation" style="min-height: 300px; white-space: pre; overflow: hidden; user-select: none;"></pre>
+                </r-cell>
+                <r-cell span="6+1" span-s="1">
                     <p>Other interests</p>
                 </r-cell>
                 <r-cell span="1" span-s="1">
                     <p>Machine knitting, pattern design, ascii art, and cycling.</p>
                 </r-cell>
-
-
-                <r-cell span="5" span-s="row" span-l="2+2">
-                    <pre class="animation" style="min-height: 300px; white-space: pre; overflow: hidden; user-select: none;"></pre>
-                </r-cell>
-                <r-cell span="7-7" span-s="1" span-l="7-7" class="flex-v">
-                    <img src="img/photo.jpeg" alt="photo" style="max-width: 200px;">
+                <r-cell span="8-8" span-s="row" class="flex-v">
+                    <img src="img/photo.jpeg" alt="photo" style="max-width: 200px; margin-top: auto ;">
                     <footer><p>&copy; 2026 Kate May O'Neill</p></footer>
                 </r-cell>
+
+                
+                
 
             </r-grid>
         </main>
 
         <nav class="scroll-banner">
-            <p>⭐ currently looking for work ⭐ please hire me :3 ⭐</p>
-            <a href="https://github.com/katemayoneill">github</a>
-            <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a>
+            <span>⭐ currently looking for work ⭐ please hire me :3 ⭐ &nbsp; <a href="https://github.com/katemayoneill">github</a> &nbsp; <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a></span>
         </nav>
 
         
 
         <script type="text/javascript" charset="utf-8">
-            // Animate the title
             const titles = ['🐱🐱🐱🐱🐱🐱', '😺😺😺😺😺😺', '😸😸😸😸😸😸', '😹😹😹😹😹😹', '😻😻😻😻😻😻', '😼😼😼😼😼😼', '😽😽😽😽😽😽', '🙀🙀🙀🙀🙀🙀', '😿😿😿😿😿😿', '😾😾😾😾😾😾'];
             let titleIndex = 0;
 
