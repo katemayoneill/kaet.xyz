@@ -1,6 +1,6 @@
 /**
 @author kate
-@title  name 
+@title  name
 @desc   name display
 */
 
@@ -21,13 +21,25 @@ const MOBILE_BREAKPOINT = {
 	height : 200
 }
 
+/**
+ * verifies ascii input files exist
+ *
+ * @param {object} cfg config
+ * @throws {Error} config file must exist and contain ascii
+ */
 function check_config(cfg) {
 	if (!cfg) throw new Error('config required');
 	if (!cfg.files || !cfg.files || !cfg.files.small) {
-		throw new Error('config.art_files.big and config.art_files.small required');
+		throw new Error('config.files.big and config.files.small required');
 	}
 }
 
+/**
+ * gets <pre>'s css styling or returns default values
+ *
+ * @param {HTMLPreElement} pre 
+ * @returns {{ backgroundColor: string, color: string, fontFamily: string, lineHeight: string }} 
+ */
 function get_css(pre) {
 	const s = window.getComputedStyle(pre);
 	return {
@@ -38,14 +50,34 @@ function get_css(pre) {
 	};
 }
 
+/**
+ * logs a message
+ *
+ * @param {string} level - e.g. 'info', 'error'
+ * @param {string} message
+ * @param {unknown} [data] - optional context
+ */
 function log(level, message, data = null) {
-	console.log(`[ascii-animation] ${level.toUpperCase()}: ${message}`, data || '');
+	console.log(`[animation] ${level.toUpperCase()}: ${message}`, data || '');
 }
 
+/**
+ * converts coordinates to a key for grid lookup
+ *
+ * @param {number} x float
+ * @param {number} y float
+ * @returns {string} int string 
+ */
 function  coords_to_key(x, y) {
 	return `${Math.floor(x)},${Math.floor(y)}`;
 }
 
+/**
+ * parses ascii rows into a grid of characters with physics state
+ *
+ * @param {string[]} rows
+ * @returns {{ grid: Array<{ x: number, y: number, char: string, offset_x: number, offset_y: number, vel_x: number, vel_y: number }> }}
+ */
 function rows_to_ascii(rows) {
 	let grid = [];
 		rows.forEach((line, y) => {
@@ -58,18 +90,30 @@ function rows_to_ascii(rows) {
 	return { grid };
 }
 
+/**
+ * switches between big and small ascii
+ */
 function change_ascii() {
 	const bp = config.mobile_breakpoint;
 	const is_mobile = window.innerWidth < bp.width;
 	grid = is_mobile ? small.grid : big.grid;
 	map.clear();
-	grid.forEach(art => map.set(coords_to_key(art.x, art.y), art));
+	grid.forEach(art => map.set(coords_to_key(art.x, art.y), art)); 
 }
 
+/**
+ * switches grid based on window width
+ */
 export function on_resize() {
 	change_ascii();
 }
 
+/**
+ * updates character physics
+ *
+ * @param {object} context - play.core animation context
+ * @param {{ x: number, y: number, pressed: boolean }} cursor 
+ */
 export function pre(context, cursor) {
 	grid.forEach( art => {
 		const p = config.physics;
@@ -93,6 +137,14 @@ export function pre(context, cursor) {
 	});
 }
 
+/**
+ * renders the character at a given coordinate
+ *
+ * @param {{ x: number, y: number }} coord - cell coords
+ * @param {object} context - play.core animation context 
+ * @param {{ x: number, y: number, pressed: boolean }} cursor 
+ * @returns {string} character to render
+ */
 export function main(coord, context, cursor) {
 	for (let art of map.values()) {
 		const offset_x = Math.round(art.offset_x);
@@ -104,6 +156,15 @@ export function main(coord, context, cursor) {
 	return ' ';
 }
 
+/**
+ * initialise animation
+ * 
+ * @param {object} context - play.core 
+ * @param {Array} buffer - play.core
+ * @param {object} userData - play.core
+ * @returns {Promise<void>}
+ * @throws {Error} if config.files.big or config.files.small are missing
+ */
 export async function boot(context, buffer, userData) {
 	const user_config = context.settings;
 	check_config(user_config);
