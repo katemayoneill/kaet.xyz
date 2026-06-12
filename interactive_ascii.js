@@ -7,6 +7,7 @@
 let config = null;
 let big, small, grid = [];
 let renderMap = new Map();
+let context = null;
 
 const PHYSICS = {
 	    repel_distance : 8,
@@ -15,11 +16,6 @@ const PHYSICS = {
       	spring_force   : 0.08,
       	friction       :  0.92
 };
-
-const MOBILE_BREAKPOINT = {
-	width  : 800,
-	height : 200
-}
 
 /**
 verifies ascii input files exist
@@ -64,23 +60,23 @@ parses ascii rows into a grid of characters with physics state
 */
 function rows_to_ascii(rows) {
 	let grid = [];
+	let width = 0;
 		rows.forEach((line, y) => {
 			for (let x = 0; x < line.length; x++) {
 				if (line[x] !== ' ') {
 					grid.push({x, y, char: line[x], offset_x: 0, offset_y: 0, vel_x: 0, vel_y: 0});
+					if (x >= width) width = x + 1;
 				}
 			}
 		});
-	return { grid };
+	return { grid, width };
 }
 
 /**
-switches between big and small ascii based on window width
+switches between big and small ascii based on element cols
 */
 function change_ascii() {
-	const bp = config.mobile_breakpoint;
-	const is_mobile = window.innerWidth < bp.width;
-	grid = is_mobile ? small.grid : big.grid;
+	grid = context && context.cols >= big.width ? big.grid : small.grid;
 	renderMap.clear();
 }
 
@@ -97,8 +93,9 @@ updates physics and rebuilds render map
 @param {object} context
 @param {{x, y, pressed}} cursor
 */
-export function pre(context, cursor) {
-	grid.forEach( art => {
+export function pre(ctx, cursor) {
+	context = ctx;
+	grid.forEach(art => {
 		const p = config.physics;
 		const dx = art.x + art.offset_x - cursor.x;
 		const dy = art.y + art.offset_y - cursor.y;
@@ -141,7 +138,8 @@ play.core boot hook loads ascii files and initialises config
 @returns {Promise<void>}
 @throws {Error} if ascii files are missing
 */
-export async function boot(context, buffer, userData) {
+export async function boot(ctx, buffer, userData) {
+	context = ctx;
 	const user_config = context.settings;
 	check_config(user_config);
 
@@ -149,7 +147,6 @@ export async function boot(context, buffer, userData) {
 		log('info', 'initializing', user_config);
 
 		const physics = { ...PHYSICS, ...user_config.physics };
-		const breakpoint = { ...MOBILE_BREAKPOINT, ...user_config.mobile_breakpoint };
 
 		config = {
 			files: user_config.files,
@@ -160,7 +157,6 @@ export async function boot(context, buffer, userData) {
 				spring_force: physics.spring_force,
 				min_distance: physics.min_distance
 			},
-			mobile_breakpoint: breakpoint,
 		};
 
 		log('info', 'loading files');
