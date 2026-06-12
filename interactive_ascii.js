@@ -5,8 +5,8 @@
 */
 
 let config = null;
-let big, small, grid = []
-let map = new Map();
+let big, small, grid = [];
+let renderMap = new Map();
 
 const PHYSICS = {
 	    repel_distance : 8,
@@ -22,62 +22,46 @@ const MOBILE_BREAKPOINT = {
 }
 
 /**
- * verifies ascii input files exist
- *
- * @param {object} cfg config
- * @throws {Error} config file must exist and contain ascii
- */
+verifies ascii input files exist
+
+@param {object} cfg
+@throws {Error} if files missing
+*/
 function check_config(cfg) {
 	if (!cfg) throw new Error('config required');
-	if (!cfg.files || !cfg.files || !cfg.files.small) {
+	if (!cfg.files || !cfg.files.big || !cfg.files.small) {
 		throw new Error('config.files.big and config.files.small required');
 	}
 }
 
 /**
- * gets <pre>'s css styling or returns default values
- *
- * @param {HTMLPreElement} pre 
- * @returns {{ backgroundColor: string, color: string, fontFamily: string, lineHeight: string }} 
- */
-function get_css(pre) {
-	const s = window.getComputedStyle(pre);
-	return {
-		backgroundColor: s.backgroundColor || 'white',
-		color: s.color || 'black',
-		fontFamily: s.fontFamily || 'monospace',
-		lineHeight: s.lineHeight || '1'
-	};
-}
+logs a message
 
-/**
- * logs a message
- *
- * @param {string} level - e.g. 'info', 'error'
- * @param {string} message
- * @param {unknown} [data] - optional context
- */
+@param {string} level e.g. 'info', 'error'
+@param {string} message
+@param {unknown} [data]
+*/
 function log(level, message, data = null) {
 	console.log(`[animation] ${level.toUpperCase()}: ${message}`, data || '');
 }
 
 /**
- * converts coordinates to a key for grid lookup
- *
- * @param {number} x float
- * @param {number} y float
- * @returns {string} int string 
- */
+converts coordinates to a map key
+
+@param {number} x
+@param {number} y
+@returns {string}
+*/
 function  coords_to_key(x, y) {
 	return `${Math.floor(x)},${Math.floor(y)}`;
 }
 
 /**
- * parses ascii rows into a grid of characters with physics state
- *
- * @param {string[]} rows
- * @returns {{ grid: Array<{ x: number, y: number, char: string, offset_x: number, offset_y: number, vel_x: number, vel_y: number }> }}
- */
+parses ascii rows into a grid of characters with physics state
+
+@param {string[]} rows
+@returns {{ grid: Array<{x, y, char, offset_x, offset_y, vel_x, vel_y}> }}
+*/
 function rows_to_ascii(rows) {
 	let grid = [];
 		rows.forEach((line, y) => {
@@ -91,29 +75,28 @@ function rows_to_ascii(rows) {
 }
 
 /**
- * switches between big and small ascii
- */
+switches between big and small ascii based on window width
+*/
 function change_ascii() {
 	const bp = config.mobile_breakpoint;
 	const is_mobile = window.innerWidth < bp.width;
 	grid = is_mobile ? small.grid : big.grid;
-	map.clear();
-	grid.forEach(art => map.set(coords_to_key(art.x, art.y), art)); 
+	renderMap.clear();
 }
 
 /**
- * switches grid based on window width
- */
+play.core resize hook
+*/
 export function on_resize() {
 	change_ascii();
 }
 
 /**
- * updates character physics
- *
- * @param {object} context - play.core animation context
- * @param {{ x: number, y: number, pressed: boolean }} cursor 
- */
+updates physics and rebuilds render map
+
+@param {object} context
+@param {{x, y, pressed}} cursor
+*/
 export function pre(context, cursor) {
 	grid.forEach( art => {
 		const p = config.physics;
@@ -135,36 +118,29 @@ export function pre(context, cursor) {
 		art.offset_x += art.vel_x;
 		art.offset_y += art.vel_y;
 	});
+	renderMap.clear();
+	grid.forEach(art => {
+		renderMap.set(coords_to_key(art.x + Math.round(art.offset_x), art.y + Math.round(art.offset_y)), art.char);
+	});
 }
 
 /**
- * renders the character at a given coordinate
- *
- * @param {{ x: number, y: number }} coord - cell coords
- * @param {object} context - play.core animation context 
- * @param {{ x: number, y: number, pressed: boolean }} cursor 
- * @returns {string} character to render
- */
+returns character at coord from render map
+
+@param {{x, y}} coord
+@returns {string}
+*/
 export function main(coord, context, cursor) {
-	for (let art of map.values()) {
-		const offset_x = Math.round(art.offset_x);
-		const offset_y = Math.round(art.offset_y);
-		if (Math.floor(coord.x) === art.x + offset_x && Math.floor(coord.y) === art.y + offset_y) {
-			return art.char;
-		}
-	}
-	return ' ';
+	return renderMap.get(coords_to_key(coord.x, coord.y)) || ' ';
 }
 
 /**
- * initialise animation
- * 
- * @param {object} context - play.core 
- * @param {Array} buffer - play.core
- * @param {object} userData - play.core
- * @returns {Promise<void>}
- * @throws {Error} if config.files.big or config.files.small are missing
- */
+play.core boot hook loads ascii files and initialises config
+
+@param {object} context
+@returns {Promise<void>}
+@throws {Error} if ascii files are missing
+*/
 export async function boot(context, buffer, userData) {
 	const user_config = context.settings;
 	check_config(user_config);
@@ -174,7 +150,6 @@ export async function boot(context, buffer, userData) {
 
 		const physics = { ...PHYSICS, ...user_config.physics };
 		const breakpoint = { ...MOBILE_BREAKPOINT, ...user_config.mobile_breakpoint };
-		const settings = user_config.settings || get_css(user_config.pre || document.querySelector('pre'));
 
 		config = {
 			files: user_config.files,
@@ -186,7 +161,6 @@ export async function boot(context, buffer, userData) {
 				min_distance: physics.min_distance
 			},
 			mobile_breakpoint: breakpoint,
-			settings
 		};
 
 		log('info', 'loading files');

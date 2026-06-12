@@ -15,7 +15,7 @@
 
         <link rel="stylesheet" href="libs/raster/raster2.css">
         <link rel="icon" href="/img/favicon.ico">
-        
+
         <title>Kate O'Neill</title>
 
         <meta name="description" content="My name is Kate O'Neill and this is my Meta Description!">
@@ -31,16 +31,9 @@
                 padding: 0;
             }
 
-            .face-name pre {
-                width: 80%;
-                display: inline-block;
-                height: 100px;
-                line-height: 1.2;
-		    }
-
             .scroll-banner {
                 color: blue;
-                padding: 12px 0; 
+                padding: 12px 0;
                 overflow: hidden;
                 letter-spacing: 2px;
             }
@@ -59,21 +52,26 @@
                     transform: translateX(100vw);
                 }
             }
+
+            pre.animation {
+                font-family: var(--font-mono);
+                line-height: 1;
+                letter-spacing: 1px;
+            }
         </style>
 
     </head>
 
     <body>
-
         <nav class="scroll-banner">
             <p>⭐ currently looking for work ⭐ please hire me :3 ⭐</p>
             <a href="https://github.com/katemayoneill">github</a>
             <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a>
         </nav>
-   
+
         <main>
             <section>
-                <r-grid columns="8" columns-s="2">
+                <r-grid columns="7" columns-s="2">
                     <r-cell span="1" span-s="1" span-l="1" class="flex-v">
                         <p>Education</p>
                     </r-cell>
@@ -84,13 +82,13 @@
             </section>
 
             <section>
-                <r-grid columns="8" columns-s="2">
+                <r-grid columns="7" columns-s="2">
                     <r-cell span="3+1" span-s="1" span-l="2+1">
                         <p>Projects</p>
                     </r-cell>
                     <r-cell span="1" span-s="1" span-l="1">
                         <p>
-                            Evaluating cyclists' saddle height from video. Read more <a href="">here</a>. 
+                            Evaluating cyclists' saddle height from video. Read more <a href="">here</a>.
 			            </p>
                     </r-cell>
                 </r-grid>
@@ -98,9 +96,9 @@
             </section>
 
             <section>
-                <r-grid columns="8" columns-s="2">
-		            <r-cell span="4" span-s="1" span-l="2+2">
-		                <pre class="animation" style="min-height: 260px; margin: 0; white-space: pre; overflow: hidden; user-select: none;"></pre>
+                <r-grid columns="7" columns-s="2">
+                    <r-cell span="4" span-s="row" span-l="2+2">
+                        <pre class="animation" style="min-height: 300px; margin: 0; white-space: pre; overflow: hidden; user-select: none;"></pre>
                     </r-cell>
                     <r-cell span="1" span-s="1" span-l="4+1">
                         <p>Other interests</p>
@@ -110,106 +108,37 @@
                             Machine knitting, pattern design, ascii art, and cycling.
                         </p>
                     </r-cell>
-                    <r-cell span="1" span-s="1" span-l="1" class="flex-v">
-                        <img src="img/photo.jpeg" alt="photo" style="margin-top: auto; max-width: 200px;">
-                    </r-cell>
+                </r-grid>
 
-		
+                <figure>
+                    <r-grid columns="7" columns-s="2">
+                        <r-cell span="7-7" span-s="1" span-l="7-7" class="flex-v">
+                            <img src="img/photo.jpeg" alt="photo" style="margin-top: auto; max-width: 200px;">
+                        </r-cell>
+                    </r-grid>
+                </figure>
+            </section>
+        </main>
 
-		
+        <footer>
+            <r-grid columns="7" columns-s="3">
+                <r-cell span="7-7" span-s="1" span-l="7-7">
+			        <p>&copy; 2026 Kate May O'Neill</p>
+		        </r-cell>
+	        </r-grid>
+        </footer>
 
-	</r-grid>
+        <script type="text/javascript" charset="utf-8">
+            // Animate the title
+            const titles = ['🐱🐱🐱🐱🐱🐱', '😺😺😺😺😺😺', '😸😸😸😸😸😸', '😹😹😹😹😹😹', '😻😻😻😻😻😻', '😼😼😼😼😼😼', '😽😽😽😽😽😽', '🙀🙀🙀🙀🙀🙀', '😿😿😿😿😿😿', '😾😾😾😾😾😾'];
+            let titleIndex = 0;
 
-                    <h2>Languages</h2>
-                    
-                    <pre>English ⭐️⭐️⭐️⭐️⭐️
-French  ⭐️⭐️⭐️⭐️⭐️
-Italian ⭐️⭐️⭐️
-German  ⭐️⭐️⭐️</pre>
+            setInterval(() => {
+              document.title = titles[titleIndex];
+              titleIndex = (titleIndex + 1) % titles.length;
+            }, 500);
+          </script>
 
-                </section>
-
-                <section>
-                    <h2>Projects</h2>
-
-                        <h3><a href="https://kaet.xyz/">kaet.xyz</a></h3>
-                        <p>Personal portfolio website (yes, this one!) using HTML/CSS, JavaScript, AWS Amplify.</p>
-
-                        <h3><a href="https://forum.kaet.xyz/">forum.kaet.xyz</a></h3>
-                        <p>Forum made using WordPress and hosted on NearlyFreeSpeech.net</p>
-
-                        <h3><a href="https://blog.kaet.xyz/">kaet.xyz</a></h3>
-                        <p>Personal Blog made using Astro, Javascript and CSS hosted on AWS Amplify</p>
-
-                        <h3><a href="https://github.com/jathonderulo/SwEngGroup27">AI Persona Chatbot</a></h3>
-                        <p>AI chatbot that interprets and analyses large survey data sets for 
-                            CSU33013 <abbr title="Software Engineering Group Project">SWENG</abbr> II and Bounce Insights using OpenAI API, Node.js, ReactJS.</p>
-
-                        <h3><a href="https://gitlab.scss.tcd.ie/malashcs/swe-group3-frontend">Recipes App</a></h3>
-                        <p>Recipe Web app for CSU33012 Software Engineering using HTML/CSS, Node.js, Docker, Spring Boot, Java, Apache Maven</p>
-
-                        <h3><a href="https://github.com/alexandersep/On-Demand-Video-Transcoding">On Demand Video Transcoding</a></h3>
-                        <p>Web application that provides on-demand video transcoding for CSU22013 <abbr title="Software Engineering Group Project">SWENG</abbr> & Shutterstock 
-                            using HTMl/CSS, JavaScript, Docker, Python, Flask, SQLite, FFMPEG, FFPROBE.</p>
-
-                        <h3><a href="https://gitlab.scss.tcd.ie/kannansk/msgroup41">Morse Code Game</a></h3>
-                        <p>Game written in C and ARM Assembly Language for CSU23021 Microprocessor Systems using Raspberry Pi Pico, C, ARM Assembly, Doxygen.</p>
-
-                </section>
-
-                <section>
-                    <h2>Societies</h2>
-
-                    <h3>Pirate Party</h3>
-                    <p>Events Officer in 1st year, and Chair (Captain) in 2nd year. In third year I was <abbr title="Public Relations Officer">PRO</abbr>.</p>
-
-                    <h3>Computer Science Society (DUCSS)</h3>
-                    <p>Amenities in 2nd year.</p>
-
-                    <h3>Internet Society (NetSoc)</h3>
-                    <p>Amenities in 2nd year and 3rd year.</p>
-
-                </section>
-                
-
-                
-
-            </article>
-
-            <aside>
-
-                <section>
-
-                    <h2>Knitting</h2>
-                    <p>Mainly socks with 2.5mm needles using magic loop method.</p>
-
-                    <figure>
-                        
-                        <img src="/img/knitting.png" alt="Spider socks">
-                        <figcaption>Spider socks</figcaption>
-
-                    </figure>
-
-                    <p><a href="https://www.instagram.com/knitterforlife01/">see more</a></p>
-                    <p><a href="/pages/knitting.html">patterns</a></p>
-
-                </section>
-
-                <section>
-
-                    <h2>Machine Knitting</h2>
-                    <p>Recently acquired an antique Singer double bed knitting machine that I have been slowly learning to use.</p>
-
-                </section>
-
-                <section>
-
-                    <h2>Fermentation</h2>
-                    <p>Water kefir, kombucha, ginger bug, sourdough, ...</p>
-
-                </section>              
-
-            </aside>
 
             <script type="module">
                 import { run } from './libs/play.core/src/run.js'
@@ -229,27 +158,6 @@ German  ⭐️⭐️⭐️</pre>
                     console.log(e)
                 })
             </script>
-
-        </main>
-
-        <footer>
-            <r-grid columns="6" columns-s="3">
-                <r-cell span="6-6" span-s="1" span-l="6-6">
-			        <p>&copy; 2026 Kate May O'Neill</p>
-		        </r-cell>
-	        </r-grid>
-        </footer>
-        
-        <script type="text/javascript" charset="utf-8">
-            // Animate the title
-            const titles = ['🐱🐱🐱🐱🐱🐱', '😺😺😺😺😺😺', '😸😸😸😸😸😸', '😹😹😹😹😹😹', '😻😻😻😻😻😻', '😼😼😼😼😼😼', '😽😽😽😽😽😽', '🙀🙀🙀🙀🙀🙀', '😿😿😿😿😿😿', '😾😾😾😾😾😾'];
-            let titleIndex = 0;
-
-            setInterval(() => {
-              document.title = titles[titleIndex];
-              titleIndex = (titleIndex + 1) % titles.length;
-            }, 500);
-          </script>
 
     </body>
 </html>
