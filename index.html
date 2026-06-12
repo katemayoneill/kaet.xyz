@@ -13,7 +13,7 @@
 
 
 
-        <link rel="stylesheet" href="libs/raster/raster.css">
+        <link rel="stylesheet" href="libs/raster/raster2.css">
         <link rel="icon" href="/img/favicon.ico">
         
         <title>Kate O'Neill</title>
@@ -21,13 +21,14 @@
         <meta name="description" content="My name is Kate O'Neill and this is my Meta Description!">
 
         <style>
-            
+
             :root {
                 --font-mono: "Courier New", monospace;
             }
 
             body {
 	            font-family: 'Times New Roman', serif;
+                padding: 0;
             }
 
             .face-name pre {
@@ -37,20 +38,41 @@
                 line-height: 1.2;
 		    }
 
+            .scroll-banner {
+                color: blue;
+                padding: 12px 0; 
+                overflow: hidden;
+                letter-spacing: 2px;
+            }
+
+            .scroll-banner p {
+                display: inline-block;
+                animation: scroll 5s linear infinite;
+            }
+
+            @keyframes scroll {
+                0% {
+                    transform: translateX(-50vw);
+                }
+                100% {
+                    transform: translateX(100vw);
+                }
+            }
+
         </style>
 
     </head>
 
     <body>
         <header>
-                <nav>
-                    <a href="https://github.com/katemayoneill">github</a>
-                    <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a>
-                    <a href="https://www.instagram.com/knitterforlife01/">instagram</a>
-                </nav>
-
-
-
+            <div class="scroll-banner">
+                <p>⭐ currently looking for work ⭐ please hire me :3 ⭐</p>
+            </div>
+            <nav>
+                <a href="https://github.com/katemayoneill">github</a>
+                <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a>
+                <a href="https://www.instagram.com/knitterforlife01/">instagram</a>
+            </nav>
         </header>
 
 
