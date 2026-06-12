@@ -13,76 +13,21 @@
 
 
 
-
+        <link rel="stylesheet" href="libs/raster/raster.css">
         <link rel="icon" href="/img/favicon.ico">
         
-        <title>Kate O'Neill - Integrated Computer Science | Trinity College Dublin</title>
+        <title>Kate O'Neill</title>
 
-        <meta name="description" content="My name is Kate O'Neill a final year ICS student, and this is my Meta Description!">
+        <meta name="description" content="My name is Kate O'Neill and this is my Meta Description!">
 
         <style>
-            * {
-
-                box-sizing: border-box;
-                font-size: medium;
-            }
-
-            h1, h2, h3 {
-                margin-bottom: 0;
-                padding-bottom: 0;
-            }
-
-            p {
-                margin-top: 0;
-                padding-top: 0;
-            }
-
-            img {
-                height: 150px;
-            }
-
-            header div {
-                display: inline-block;
-                vertical-align: bottom;
+            
+            :root {
+                --font-mono: "Courier New", monospace;
             }
 
             body {
 	            font-family: 'Times New Roman', serif;
-	            margin: 0;
-                padding: 0;
-                text-align: left;
-                background-size: 100% 600px;
-                word-wrap: break-word;
-                overflow-wrap: break-word;
-                font-size: 20px;
-                line-height: 1.7;
-            }
-
-            main {
-                width: 720px;
-                max-width: calc(100% - 2em);
-                margin: auto;
-                padding: 3em 1em;
-            }
-
-            header {
-                margin: 0;
-                padding: 1em 1em;
-            }
-
-            nav a {
-	        	padding: 0.5em 0.5em;
-	        }
-
-            footer {
-                padding: 1em 1em;
-            }
-
-            .face-name img {
-                display: inline-block;
-                width: auto;
-                height: 100px;
-
             }
 
             .face-name pre {
@@ -98,13 +43,6 @@
 
     <body>
         <header>
-
-            
-            
-
-
-                
-
                 <nav>
                     <a href="https://github.com/katemayoneill">github</a>
                     <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a>
@@ -236,7 +174,7 @@ German  ⭐️⭐️⭐️</pre>
             </aside>
 
             <script type="module">
-                import { run } from './play.core/src/run.js'
+                import { run } from './libs/play.core/src/run.js'
                 import * as program from './interactive_ascii.js'
                 run(program, {
                     element : document.querySelector('pre'),
@@ -263,14 +201,14 @@ German  ⭐️⭐️⭐️</pre>
         </footer>
         
         <script type="text/javascript" charset="utf-8">
-            let a;
-            let time;
+            // Animate the title
+            const titles = ['🐱🐱🐱🐱🐱🐱', '😺😺😺😺😺😺', '😸😸😸😸😸😸', '😹😹😹😹😹😹', '😻😻😻😻😻😻', '😼😼😼😼😼😼', '😽😽😽😽😽😽', '🙀🙀🙀🙀🙀🙀', '😿😿😿😿😿😿', '😾😾😾😾😾😾'];
+            let titleIndex = 0;
+
             setInterval(() => {
-              a = new Date();
-              time = a.toDateString() + ' ' + a.toTimeString();
-              time = time.toLowerCase();
-              document.getElementById('time').innerHTML = time;
-            }, 1000);
+              document.title = titles[titleIndex];
+              titleIndex = (titleIndex + 1) % titles.length;
+            }, 500);
           </script>
 
     </body>
