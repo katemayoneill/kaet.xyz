@@ -24,18 +24,18 @@
 
             :root {
                 --font-mono: "Courier New", monospace;
-            }
-
-            body {
-	            font-family: 'Times New Roman', serif;
-                padding: 0;
+                --rowGap: calc(var(--lineHeight) * 0.5);
             }
 
             .scroll-banner {
                 color: blue;
-                padding: 12px 0;
                 overflow: hidden;
                 letter-spacing: 2px;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 10;
             }
 
             .scroll-banner p,
@@ -55,78 +55,69 @@
 
             pre.animation {
                 font-family: var(--font-mono);
+                font-size: 10px;
                 line-height: 1;
                 letter-spacing: 1px;
+                margin-top: 6lh;
+            }
+
+            footer{
+                text-align: end;
             }
         </style>
 
     </head>
 
     <body>
+     
+
+        <main>
+            <r-grid columns="7" columns-s="2">
+
+                <r-cell span="1" span-s="1" class="flex-v">
+                    <p>Education</p>
+                </r-cell>
+                <r-cell span="1" span-s="1" class="flex-v">
+                    <p>BA(Mod) in Computer Science @ <a href="https://www.tcd.ie/scss/">Trinity College Dublin</a></p>
+                </r-cell>
+
+                <r-cell span=row>&nbsp;</r-cell>
+
+                <r-cell span="3+1" span-s="1">
+                    <p>Projects</p>
+                </r-cell>
+                <r-cell span="1" span-s="1" class="flex-v" style="justify-content: flex-end;"">
+                    <p>Evaluating cyclists' saddle height from video. Read more <a href="">here</a>.</p>
+                </r-cell>
+
+                <r-cell span=row>&nbsp;</r-cell>
+
+                <r-cell span="5+1" span-s="1">
+                    <p>Other interests</p>
+                </r-cell>
+                <r-cell span="1" span-s="1">
+                    <p>Machine knitting, pattern design, ascii art, and cycling.</p>
+                </r-cell>
+
+
+                <r-cell span="5" span-s="row" span-l="2+2">
+                    <pre class="animation" style="min-height: 300px; white-space: pre; overflow: hidden; user-select: none;"></pre>
+                </r-cell>
+                <r-cell span="7-7" span-s="1" span-l="7-7" class="flex-v">
+                    <img src="img/photo.jpeg" alt="photo" style="max-width: 200px;">
+                    <footer><p>&copy; 2026 Kate May O'Neill</p></footer>
+                </r-cell>
+
+            </r-grid>
+        </main>
+
         <nav class="scroll-banner">
             <p>⭐ currently looking for work ⭐ please hire me :3 ⭐</p>
             <a href="https://github.com/katemayoneill">github</a>
             <a href="https://www.linkedin.com/in/katemayoneill/">linkedin</a>
         </nav>
 
-        <main>
-            <section>
-                <r-grid columns="7" columns-s="2">
-                    <r-cell span="1" span-s="1" span-l="1" class="flex-v">
-                        <p>Education</p>
-                    </r-cell>
-                    <r-cell span="1" span-s="1" span-l="1" class="flex-v">
-                        <p>BA(Mod)in Computer Science @ <a href="https://www.tcd.ie/scss/">Trinity College Dublin</a> </i></p>
-                    </r-cell>
-                </r-grid>
-            </section>
-
-            <section>
-                <r-grid columns="7" columns-s="2">
-                    <r-cell span="3+1" span-s="1" span-l="2+1">
-                        <p>Projects</p>
-                    </r-cell>
-                    <r-cell span="1" span-s="1" span-l="1">
-                        <p>
-                            Evaluating cyclists' saddle height from video. Read more <a href="">here</a>.
-			            </p>
-                    </r-cell>
-                </r-grid>
-
-            </section>
-
-            <section>
-                <r-grid columns="7" columns-s="2">
-                    <r-cell span="4" span-s="row" span-l="2+2">
-                        <pre class="animation" style="min-height: 300px; margin: 0; white-space: pre; overflow: hidden; user-select: none;"></pre>
-                    </r-cell>
-                    <r-cell span="1" span-s="1" span-l="4+1">
-                        <p>Other interests</p>
-                    </r-cell>
-                    <r-cell span="1" span-s="1" span-l="1">
-                        <p>
-                            Machine knitting, pattern design, ascii art, and cycling.
-                        </p>
-                    </r-cell>
-                </r-grid>
-
-                <figure>
-                    <r-grid columns="7" columns-s="2">
-                        <r-cell span="7-7" span-s="1" span-l="7-7" class="flex-v">
-                            <img src="img/photo.jpeg" alt="photo" style="margin-top: auto; max-width: 200px;">
-                        </r-cell>
-                    </r-grid>
-                </figure>
-            </section>
-        </main>
-
-        <footer>
-            <r-grid columns="7" columns-s="3">
-                <r-cell span="7-7" span-s="1" span-l="7-7">
-			        <p>&copy; 2026 Kate May O'Neill</p>
-		        </r-cell>
-	        </r-grid>
-        </footer>
+        
 
         <script type="text/javascript" charset="utf-8">
             // Animate the title
